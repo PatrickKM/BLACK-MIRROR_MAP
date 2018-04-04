@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Black Mirror Map & Story</title>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.css' rel='stylesheet' />
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="site">
+        <header class="masthead">
+            <h1 class="site-title">MAPBOX - BLACK MIRROR</h1>
+            <p class="site-description">April 3-9, Aarhus, Denmark | #BAAA <br>
+            Patrick Koo Madsen</p>
+        </header>
+        <main class="main-content">
+
+            <div id='map' style='width: 50%; height: 100%;'></div>
+            <script>
+                mapboxgl.accessToken = 'pk.eyJ1IjoicGF0cmljay1rbSIsImEiOiJjamZqYzhiMGI2YmQ4MzFrN2IwZ3NxdXhiIn0.B09_QXbHcuMSpsvGTYTw2Q';
+                var map = new mapboxgl.Map({
+                    container: 'map',
+                    style: 'mapbox://styles/patrick-km/cjfjkkwvkflfs2sq02c9g4vmu',
+                    center: [-13.830, 28.960],
+                    pitch: 0,
+                    bearing: 0,
+                    zoom: 16
+                });
+                var chapters = {
+                    'uss': {
+                        center: [-13.830, 28.960],
+                        pitch: 0,
+                        bearing: 0,
+                        zoom: 16
+                    },
+                    'arka': {
+                        duration: 6000,
+                        center: [-79.867,43.243],
+                        bearing: 0,
+                        zoom: 10.9,
+                        pitch: 75
+                    },
+                    'croc': {
+                        bearing: 0,
+                        center: [-21.935,64.146],
+                        zoom: 12.3,
+                        pitch: 75
+                    },
+                    'hang': {
+                        bearing: 0,
+                        center: [-0.428,51.345],
+                        zoom: 9.9
+                    },
+                    'metal': {
+                        bearing: 0,
+                        center: [-3.997694, 50.407814],
+                        zoom: 16,
+                        pitch: 41,
+                    },
+                    'black': {
+                        bearing: 0,
+                        center: [-2.544181, 36.770493],
+                        zoom: 7
+                    }
+                };
+
+                // On every scroll event, check which element is on screen
+                window.onscroll = function() {
+                    var chapterNames = Object.keys(chapters);
+                    for (var i = 0; i < chapterNames.length; i++) {
+                        var chapterName = chapterNames[i];
+                        if (isElementOnScreen(chapterName)) {
+                            setActiveChapter(chapterName);
+                            break;
+                        }
+                    }
+                };
+
+                var activeChapterName = 'uss';
+
+                function setActiveChapter(chapterName) {
+                    if (chapterName === activeChapterName) return;
+
+                    map.flyTo(chapters[chapterName]);
+
+                    document.getElementById(chapterName).setAttribute('class', 'active');
+                    document.getElementById(activeChapterName).setAttribute('class', '');
+
+                    activeChapterName = chapterName;
+                }
+
+                function isElementOnScreen(id) {
+                    var element = document.getElementById(id);
+                    var bounds = element.getBoundingClientRect();
+                    return bounds.top < window.innerHeight && bounds.bottom > 0;
+                }
+            </script>
+        </main>
+
+        <aside class="sidebar">
+            <ul class="info">
+                <li id="uss" class="usscallister" class='active'>
+                    <h2>USS Calister</h2>
+                    <p>
+                        As a spoof of the original Star Trektelevision series, USS Callister required the use of special effects more than any other episode this season. Scenes within the titular spaceship were filmed on a set built at Twickenham Studios, while Lanzarote’s Playa Bermeja was used to depict an alien planet. The Lanzarote shoot lasted for four days and required a total of 80 cast and crew members to complete, incurring a local spend of EUR260,000. The Canary Islands now offers a tax rebate of up to 40% on locally incurred filming costs.
+                    </p>
+                </li>
+                <li id="arka" class="arkangel">
+                    <h2>Arkangel</h2>
+                    <p>Directed by Jodie Foster, this story of a mother and her overbearing attitude towards parenting was filmed on location in Ontario. The small town of Hamilton is used primarily to depict the suburban life of its main characters while the Arkangel clinic was filmed in Toronto’s Thompson hotel. Ontario's offering of a 35% tax credit on filming has made it one of the most popular production hubs in the world. An additional 5% can be accrued by first-time producers.</p>
+                </li>
+                <li id="croc" class="crocodile">
+                    <h2>Crocodile</h2>
+                    <p>Delving into a world of murder in the not-so-distant future, Crocodile utilises locations in Iceland to invoke a sense of isolation. Over a period of four weeks in early 2017, the production filmed in Reykjavik, the Grindavik and Eyrarbakki villages, Kleifarvatn lake, Reykjanes Peninsula, Borgarfjordur and Mosfellsbaer Town. Detailing the production, Karl Sigurðarson of Truenorth Iceland explains: “during our shoot in Reykjavik city centre (where the hotel and automated pizza delivery vehicle scenes were filmed) we faced the most snowfall Reykjavik had seen for over 70 years. This limited us somewhat and we wrapped early that day. Other than that, everything went really well.” A 25% reimbursement can be collected on the cost of filming in Iceland, which recently hosted production on Star Wars: The Last Jedi.</p>
+                </li>
+                <li id="hang" class="hangthedj">
+                    <h2>Hang The DJ</h2>
+                    <p>In Hang the DJ, the natural landscape of Surrey’s Painshill stands in contrast with the episode’s story-line about the new-age of virtual dating. The Abbey of Painshill, which overlooks the local lake, is used as the setting for “Pairing Day”. Scenes were also shot in Bourne Woods, a popular filming location which has appeared in such high-profile productions as Transformers: The Last Knight and Avengers: Age of Ultron. The UK affords a 25% tax rebate to high-end TV productions that meet a minimum spend of GBP1 million per-broadcast hour.</p>
+                </li>
+                <li id="metal" class="metalhead">
+                    <h2>Metalhead</h2>
+                    <p>While the vast moors of Metalhead’s post-apocalyptic setting might look like they were filmed in Scotland, the episode was actually filmed in Dartmoor. Officially recognised as a national park, Dartmoor covers a total of 954 square kilometres. Additional scenes were filmed in London.</p>
+                </li>
+                <li id="black" class="blackmuseum">
+                    <h2>Black Museum</h2>
+                    <p>A collection of short stories in itself, Black Museum jumps between a number of locations around the globe. The titular museum and a nearby petrol station were both filmed in Almería, Spain. The Nevada desert was also used for filming. Mainland Spain provides a tax rebate of up to 20% for international productions while the state of Nevada offers transferable tax credits of up to 20%.</p>
+                </li>
+            </ul>
+        </aside>
+    </div>
+
+
+</body>
+</html>
