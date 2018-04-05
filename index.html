@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Black Mirror Map & Story</title>
@@ -14,8 +15,7 @@
     <div class="site">
         <header class="masthead">
             <h1 class="site-title">MAPBOX - BLACK MIRROR</h1>
-            <p class="site-description">April 3-9, Aarhus, Denmark | #BAAA <br>
-            Patrick Koo Madsen</p>
+            <p class="site-description">April 3-9, Aarhus, Denmark | #BAAA <br> Patrick Koo Madsen</p>
         </header>
         <main class="main-content">
 
@@ -39,20 +39,20 @@
                     },
                     'arka': {
                         duration: 6000,
-                        center: [-79.867,43.243],
+                        center: [-79.867, 43.243],
                         bearing: 0,
                         zoom: 10.9,
                         pitch: 75
                     },
                     'croc': {
                         bearing: 0,
-                        center: [-21.935,64.146],
+                        center: [-21.935, 64.146],
                         zoom: 12.3,
                         pitch: 75
                     },
                     'hang': {
                         bearing: 0,
-                        center: [-0.428,51.345],
+                        center: [-0.428, 51.345],
                         zoom: 9.9
                     },
                     'metal': {
@@ -98,7 +98,98 @@
                     var bounds = element.getBoundingClientRect();
                     return bounds.top < window.innerHeight && bounds.bottom > 0;
                 }
+
+                var geojson = {
+                    type: 'FeatureCollection',
+                    features: [{
+                            type: 'Feature',
+                            geometry: {
+                                type: 'Point',
+                                coordinates: [-13.830, 28.960]
+                            },
+                            properties: {
+                                title: 'USS Calister',
+                                description: 'Filming Location - Playa Bermeja, Lanzarote'
+                            }
+                        },
+                        {
+                            type: 'Feature',
+                            geometry: {
+                                type: 'Point',
+                                coordinates: [-79.867, 43.243]
+                            },
+                            properties: {
+                                title: 'Arkangel',
+                                description: 'Filming Location - Hamilton, Ontario, Canada'
+                            }
+                        },
+                        {
+                            type: 'Feature',
+                            geometry: {
+                                type: 'Point',
+                                coordinates: [-21.935, 64.146]
+                            },
+                            properties: {
+                                title: 'Crocodile',
+                                description: 'Filming Location - Reykjavik, Iceland'
+                            }
+                        },
+                        {
+                            type: 'Feature',
+                            geometry: {
+                                type: 'Point',
+                                coordinates: [-0.428, 51.345]
+                            },
+                            properties: {
+                                title: 'Hang The DJ',
+                                description: 'Filming Location - Surrey´s Painshill, England'
+                            }
+                        },
+                        {
+                            type: 'Feature',
+                            geometry: {
+                                type: 'Point',
+                                coordinates: [-3.997694, 50.407814]
+                            },
+                            properties: {
+                                title: 'Metalhead',
+                                description: 'Filming Location - Dartmoor, England'
+                            }
+                        },
+                        {
+                            type: 'Feature',
+                            geometry: {
+                                type: 'Point',
+                                coordinates: [-2.544181, 36.770493]
+                            },
+                            properties: {
+                                title: 'Black Museum',
+                                description: 'Filming Location - Almería, Spain'
+                            }
+                        }
+                    ]
+                };
+
+                // add markers to map
+                geojson.features.forEach(function(marker) {
+
+                    // create a HTML element for each feature
+                    var el = document.createElement('div');
+                    el.className = 'marker';
+
+                    // make a marker for each feature and add to the map
+                    new mapboxgl.Marker(el)
+                        .setLngLat(marker.geometry.coordinates)
+                    .setPopup(new mapboxgl.Popup({
+                            offset: 25
+                        }) // add popups
+                        .setHTML('<h3>' + marker.properties.title + '</h3><p>' + marker.properties.description + '</p>'))
+                        .addTo(map);
+                });
+
             </script>
+
+
         </main>
 
         <aside class="sidebar">
@@ -138,4 +229,5 @@
 
 
 </body>
+
 </html>
